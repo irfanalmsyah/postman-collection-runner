@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PostmanCollection } from "@/interface/postman";
+import { PostmanCollection } from "@/interfaces/postman";
 import FileUploader from "@/components/FileUploader";
 import CollectionPreview from "@/components/CollectionPreview";
 
@@ -31,7 +31,10 @@ export default function App() {
                   : collection.info.description?.content}
               </p>
             )}
-            <CollectionPreview items={collection.item} />
+            <CollectionPreview
+              items={collection.item}
+              parent_auth={collection.auth}
+            />
           </div>
         )}
       </div>

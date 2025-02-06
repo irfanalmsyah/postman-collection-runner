@@ -4,16 +4,20 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
-import { CollectionItem, isItemGroup } from "@/interfaces/postman";
+import { Auth, CollectionItem, isItemGroup } from "@/interfaces/postman";
 import RequestDetails from "@/components/RequestDetails";
 import FolderIcon from "@mui/icons-material/Folder";
 import { Chip } from "@mui/material";
 
 interface CollectionPreviewProps {
   items: CollectionItem[];
+  parent_auth?: Auth | null;
 }
 
-export default function CollectionPreview({ items }: CollectionPreviewProps) {
+export default function CollectionPreview({
+  items,
+  parent_auth,
+}: CollectionPreviewProps) {
   return (
     <Box>
       {items.map((item, index) => (
@@ -59,9 +63,12 @@ export default function CollectionPreview({ items }: CollectionPreviewProps) {
           </AccordionSummary>
           <AccordionDetails>
             {isItemGroup(item) ? (
-              <CollectionPreview items={item.item} />
+              <CollectionPreview
+                items={item.item}
+                parent_auth={item.auth ?? parent_auth}
+              />
             ) : (
-              <RequestDetails item={item} />
+              <RequestDetails item={item} parent_auth={parent_auth} />
             )}
           </AccordionDetails>
         </Accordion>
