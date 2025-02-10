@@ -1,15 +1,14 @@
 import React from "react";
 import { PostmanCollection } from "@/interfaces/postman";
+import { useCollectionStore } from "@/store/useCollectionStore";
 
 interface FileUploaderProps {
-  setCollection: React.Dispatch<React.SetStateAction<PostmanCollection | null>>;
   setError: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function FileUploader({
-  setCollection,
-  setError,
-}: FileUploaderProps) {
+export default function FileUploader({ setError }: FileUploaderProps) {
+  const setCollection = useCollectionStore((state) => state.setCollection);
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -45,7 +44,6 @@ export default function FileUploader({
           setError(
             "The file is not a valid JSON or does not have the expected Postman collection format."
           );
-          setCollection(null);
         }
       }
     };
